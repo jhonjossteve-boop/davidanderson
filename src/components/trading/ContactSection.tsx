@@ -39,8 +39,8 @@ const ContactSection: React.FC = () => {
         </svg>
       ),
       label: 'Email',
-      value: 'support@davidandersontrade.com',
-      href: 'mailto:support@davidandersontrade.com',
+      value: 'davidandersontrade@email.com',
+      href: 'mailto:davidandersontrade@email.com',
     },
     {
       icon: (
