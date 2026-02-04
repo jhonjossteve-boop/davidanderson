@@ -102,7 +102,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-white font-bold text-xl">$67,842</div>
+                  <div className="text-white font-bold text-xl">$</div>
                   <div className="text-gray-400 text-sm">Live Price</div>
                 </div>
               </div>
@@ -148,7 +148,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                 </div>
                 <div className="text-center p-3 bg-white/5 rounded-lg">
                   <div className="text-gray-400 text-xs mb-1">Target</div>
-                  <div className="text-emerald-400 font-semibold">$69,200</div>
+                  <div className="text-emerald-400 font-semibold">$1,000,987,200</div>
                 </div>
                 <div className="text-center p-3 bg-white/5 rounded-lg">
                   <div className="text-gray-400 text-xs mb-1">Stop Loss</div>
@@ -167,7 +167,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                 </div>
                 <div>
                   <div className="text-white text-sm font-semibold">Trade Closed</div>
-                  <div className="text-emerald-400 text-xs">+$1,240 Profit</div>
+                  <div className="text-emerald-400 text-xs">+$23,240 Profit</div>
                 </div>
               </div>
             </div>
