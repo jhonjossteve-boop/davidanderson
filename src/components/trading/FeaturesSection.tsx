@@ -59,7 +59,7 @@ const FeaturesSection: React.FC = () => {
   ];
 
   const benefits = [
-    { value: '$2.5M+', label: 'Total Profits Generated' },
+    { value: '$1.5B+', label: 'Total Profits Generated' },
     { value: '5,000+', label: 'Active Subscribers' },
     { value: '98%', label: 'Win Rate' },
     { value: '15+', label: 'Years Experience' },
