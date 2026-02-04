@@ -18,7 +18,7 @@ const FAQSection: React.FC = () => {
     },
     {
       question: 'What markets do you cover?',
-      answer: 'Our signals cover major forex pairs (EUR/USD, GBP/USD, USD/JPY, etc.), cryptocurrencies (BTC, ETH, and major altcoins), stock indices, and commodities like gold and oil. This diversification helps spread risk across different markets.',
+      answer: 'Our signals cover major forex pairs (EUR/USD.), cryptocurrencies (BTC, ETH.), stock indices, and commodities. This diversification helps spread risk across different markets.',
     },
     {
       question: 'How much capital do I need to start?',
@@ -42,7 +42,7 @@ const FAQSection: React.FC = () => {
     },
     {
       question: 'How do I contact support?',
-      answer: 'You can reach our support team 24/7 via email at support@davidandersontrade.com, through our contact form, or via live chat on our website. Premium subscribers also get access to priority support with faster response times.',
+      answer: 'You can reach our support team 24/7 via email at davidandersontrade@email.com, through our contact form, or via live chat on our website. Premium subscribers also get access to priority support with faster response times.',
     },
   ];
 
