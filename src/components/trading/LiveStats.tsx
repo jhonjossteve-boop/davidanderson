@@ -4,7 +4,7 @@ const LiveStats: React.FC = () => {
   const [stats, setStats] = useState({
     tradesWon: 4847,
     activeTraders: 5234,
-    profitGenerated: 10432547890,
+    profitGenerated: 1432547890,
     winRate: 98,
   });
 
