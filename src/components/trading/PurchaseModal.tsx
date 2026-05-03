@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Plan } from './PricingSection';
-import { addSubscriber, checkEmailExists } from '@/lib/supabase';
 
 interface PurchaseModalProps {
   isOpen: boolean;
@@ -16,42 +15,39 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, plan }) 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [shake, setShake] = useState(false);
-  const [subscriptionDetails, setSubscriptionDetails] = useState<{
-    startDate: string;
-    endDate: string;
-  } | null>(null);
 
   if (!isOpen || !plan) return null;
+
+  // ✅ PLAN CODE MAP (STRICT VALIDATION)
+  const PLAN_CODES: Record<string, string> = {
+    basic: '09TTUYH',
+    standard: '90HHUKO',
+    premium: 'R6HUIPO',
+  };
 
   const handleValidateCode = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     const enteredCode = purchaseCode.trim().toUpperCase();
+    const correctCode = PLAN_CODES[plan.id];
 
-    // 🔥 PARTIAL PAYMENT LOGIC FOR BASIC PLAN
-    if (plan.id === 'basic' && enteredCode === '09TTUYH') {
-      setError(
-        '$350 was confirmed for this purchase. Please pay the remaining $150 to complete your Basic purchase.'
-      );
+    // ❌ Wrong code
+    if (enteredCode !== correctCode) {
+      setError('Invalid purchase code. Please contact your signal account manager.');
       setShake(true);
       setTimeout(() => setShake(false), 500);
       return;
     }
 
-    // ✅ Normal validation
-    if (enteredCode === plan.code) {
-      setIsValidated(true);
-    } else {
-      setError('Invalid purchase code. Please contact your signal account manager.');
-      setShake(true);
-      setTimeout(() => setShake(false), 500);
-    }
+    // ✅ Correct code
+    setIsValidated(true);
   };
 
+  // ✅ FORM SUBMIT (FORMSPREE)
   const handleSubmitEmail = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !email.includes('@')) {
       setError('Please enter a valid email address.');
       return;
@@ -61,52 +57,28 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, plan }) 
     setError('');
 
     try {
-      const emailExists = await checkEmailExists(email);
-      if (emailExists) {
-        setError('This email is already registered. Please use a different email or contact support.');
-        setIsSubmitting(false);
-        return;
-      }
-
-      const { error: dbError } = await addSubscriber({
-        email: email.toLowerCase(),
-        plan_type: plan.id,
-        plan_name: plan.name,
-        plan_price: plan.price,
-        plan_duration_months: plan.durationMonths,
-        purchase_code: purchaseCode.toUpperCase(),
-        status: 'active',
-      });
-
-      if (dbError) {
-        setError('An error occurred while processing your registration. Please try again.');
-        setIsSubmitting(false);
-        return;
-      }
-
-      const startDate = new Date();
-      const endDate = new Date(startDate);
-      endDate.setMonth(endDate.getMonth() + plan.durationMonths);
-
-      setSubscriptionDetails({
-        startDate: startDate.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
-        }),
-        endDate: endDate.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
+      const res = await fetch('https://formspree.io/f/yourID', { // 🔁 REPLACE THIS
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          plan: plan?.name,
+          purchase_code: purchaseCode,
         }),
       });
 
-      setIsSubmitting(false);
-      setIsSuccess(true);
+      if (res.ok) {
+        setIsSuccess(true);
+      } else {
+        setError('Failed to submit. Try again.');
+      }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
-      setIsSubmitting(false);
+      setError('Something went wrong.');
     }
+
+    setIsSubmitting(false);
   };
 
   const handleClose = () => {
@@ -115,7 +87,6 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, plan }) 
     setError('');
     setIsValidated(false);
     setIsSuccess(false);
-    setSubscriptionDetails(null);
     onClose();
   };
 
