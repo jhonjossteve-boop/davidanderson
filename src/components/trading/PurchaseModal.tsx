@@ -57,7 +57,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose, plan }) 
     setError('');
 
     try {
-      const res = await fetch('https://formspree.io/f/yourID', { // 🔁 REPLACE THIS
+      const res = await fetch('https://formspree.io/f/xqenpkgd', { // 🔁 REPLACE THIS
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
